@@ -1,0 +1,24 @@
+.auction-page {
+    display: flex; /* Use flexbox for layout */
+    padding: 20px; /* Add padding for aesthetics */
+}
+
+.players-teams {
+    flex: 3; /* This takes 3/4 of the space */
+    display: flex; /* Use flex to arrange PlayerList and TeamList side by side */
+    margin-right: 20px; /* Space between players/teams and bids table */
+}
+
+.player-list,
+.team-list {
+    flex: 1; /* This allows each list to take equal space */
+    margin-right: 10px; /* Space between PlayerList and TeamList */
+}
+
+.bids-table {
+    flex: 1; /* This takes 1/4 of the space */
+    background-color: #f9f9f9; /* Optional: background color for bids table */
+    padding: 10px; /* Optional: padding for bids table */
+    border: 1px solid #ddd; /* Optional: border for bids table */
+    border-radius: 4px; /* Optional: rounded corners for aesthetics */
+}

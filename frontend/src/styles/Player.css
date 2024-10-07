@@ -1,0 +1,8 @@
+.Player-card {
+    display: block;
+    background-color:rgb(235, 243, 205);
+    margin: 4px;
+    justify-content: center;
+    padding: 4px;
+    
+}

@@ -1,0 +1,23 @@
+/* src/styles/teamList.css */
+
+.team-list {
+    background-color: #f0faff; /* Faint bluish background */
+    padding: 20px; /* Padding around the component */
+    border-radius: 10px; /* Rounded corners */
+    max-width: 400px; /* Maximum width of the team list */
+    margin: auto; /* Center the component */
+    margin-top: 0%;
+}
+
+h1 {
+    text-align: center; /* Center the title */
+    color: #2c3e50; /* Dark color for the title */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+.Team-x {
+    display: flex; /* Use flex to align items */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    margin: 10px 0; /* Margin above and below each team card */
+}
