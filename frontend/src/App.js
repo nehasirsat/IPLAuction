@@ -1,12 +1,20 @@
-import './App.css';
-import Auction from './pages/Auction';
+import "./App.css";
+import PlayerList from "./components/PlayerList";
+import Auction from "./pages/Auction";
+import HomePage from "./pages/HomePage";
+import { BrowserRouter,Route,Routes } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <Auction/>
-      
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+        <Route path="/" element={<HomePage />}  />
+        <Route path="/auction" element={<Auction />}  />
+        <Route path='/PlayerList' element={<PlayerList/>}/>
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

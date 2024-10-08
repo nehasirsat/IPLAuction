@@ -1,25 +1,37 @@
-import Player from "../cards/Player";
-import "../styles/playerList.css"
+import React, { useEffect, useState } from 'react';
+import '../styles/playerList.css'; // Import CSS for styling
 
-export default function PlayerList({players, selectPlayer, resetBid}) {
-  
+const PlayerList = () => {
+  const [players, setPlayers] = useState([]);
+
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/players'); // Adjust the URL as needed
+        const data = await response.json();
+        setPlayers(data);
+      } catch (error) {
+        console.error('Error fetching players:', error);
+      }
+    };
+
+    fetchPlayers();
+  }, []);
 
   return (
-    <div >
-      <h1>Players</h1>
-      <div className="player-list">
-      <div>
+    <div className="player-list">
       {players.map((player) => (
-        <>
-        <Player player={player} />
-        <button onClick={(e)=>{
-          console.log("Selected-")
-          console.log(player)
-          resetBid(0)
-          selectPlayer(player)}}>Select</button></>
+        <div className="player-card" key={player.id}>
+          <h3>{player.name}</h3>
+          <p>Slab: {player.slab}</p>
+          <p>Base Price: {player.basePrice}</p>
+          <p>Max Bid: {player.maxBid}</p>
+          <p>Status: {player.status}</p>
+        </div>
       ))}
-      </div>
-      </div>
     </div>
   );
-}
+};
+
+export default PlayerList;
+
