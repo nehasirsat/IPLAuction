@@ -1,8 +1,34 @@
-.Player-card {
-    display: block;
-    background-color:rgb(235, 243, 205);
-    margin: 4px;
+.player-cards-container {
+    padding: 20px;
+    background-color: rgb(220, 180, 219);
+}
+
+.player-cards {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    padding: 4px;
-    
+}
+
+.player-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px;
+    width: 200px;
+    background-color: #7aa8c9;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(79, 32, 32, 0.1);
+}
+
+.player-card h2 {
+    font-size: 1.5em;
+}
+
+.player-card p {
+    margin: 5px 0;
+}
+
+.player-card button {
+    margin-top: 10px;
+    padding: 5px 10px;
 }

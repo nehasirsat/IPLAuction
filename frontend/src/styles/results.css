@@ -1,0 +1,50 @@
+.res {
+    display: flex; /* Use flexbox for horizontal layout */
+    width: 100%; 
+    
+}
+
+.auction-results {
+    padding: 20px;
+    display: flex; /* Make the container a flexbox */
+    justify-content: space-between; /* Distribute space between cards */
+    width: 100%; /* Full width of the container */
+  }
+  
+  .team-container {
+    display: flex; /* Use flexbox for horizontal layout */
+    width: 100%; /* Make it take full width of parent */
+  }
+  
+  .team-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px; /* Space between cards */
+    background-color: #4389c6;
+    flex: 1; /* Each card will take equal space */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    min-width: 150px; /* Minimum width for each card */
+  }
+  
+  .team-card h3 {
+    margin: 0;
+  }
+  
+  .team-card h4 {
+    margin-top: 10px;
+  }
+  
+  .player-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .player-list li {
+    margin: 5px 0;
+  }
+  
+  
+  
+  
+ 

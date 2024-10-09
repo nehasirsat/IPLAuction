@@ -1,23 +1,47 @@
-/* src/styles/teamList.css */
-
-.team-list {
-    background-color: #f0faff; /* Faint bluish background */
-    padding: 20px; /* Padding around the component */
-    border-radius: 10px; /* Rounded corners */
-    max-width: 400px; /* Maximum width of the team list */
-    margin: auto; /* Center the component */
-    margin-top: 0%;
-}
-
-h1 {
-    text-align: center; /* Center the title */
-    color: #2c3e50; /* Dark color for the title */
-    margin-bottom: 20px; /* Space below the title */
-}
-
-.Team-x {
-    display: flex; /* Use flex to align items */
-    justify-content: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
-    margin: 10px 0; /* Margin above and below each team card */
-}
+.teams-page {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .teams-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .team-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px;
+    width: calc(30% - 20px); /* Adjust width for three cards per row */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .team-card h3 {
+    margin: 0;
+  }
+  
+  .team-card ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .team-card li {
+    margin: 5px 0;
+  }
+  
+  /* Adjust for smaller screens */
+  @media (max-width: 768px) {
+    .team-card {
+      width: calc(45% - 20px); /* Two cards per row */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .team-card {
+      width: calc(100% - 20px); /* One card per row */
+    }
+  }
+  

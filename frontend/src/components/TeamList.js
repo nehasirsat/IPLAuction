@@ -3,49 +3,53 @@ import Team from "../cards/Team";
 import "../styles/teamList.css"; // Import the new CSS
 import axios from 'axios';
 
-export default function TeamList({ teams, selectedTeam, setBid, bid,selectedPlayer,selectBiddingTeam}) {
+const TeamsPage = () => {
+  const [teams, setTeams] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const handleBid = async (team) => {
-       // e.preventDefault();
-
-        selectBiddingTeam(team)
-
-        if (!selectedTeam || !bid) {
-            alert("please add bid")
-            return;
-        }  
-
-
-        try {
-            const response = await axios.post('http://localhost:5000/bid', {
-
-                //teamId, playerId, bidAmount
-                teamId: team.id,
-                playerId: selectedPlayer.id,
-                bidAmount: parseInt(bid),
-            });
-            alert(response.data.message);
-        } catch (error) {
-            console.log(error.response.data.message);
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/teams'); // Adjust the URL as needed
+        if (!response.ok) {
+          throw new Error('Failed to fetch teams');
         }
-    }
+        const data = await response.json();
+        setTeams(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    return (
-        <div className="team-list"> {/* Apply class for styling */}
-            <h1>Teams</h1>
-            {teams.map(team => (
-                <div className="Team-x" key={team.id}>
-                    <Team team={team} />
-                    <label htmlFor="bid">Bid Amount:</label>
-                    <input
-                        type="number"
-                        id={team.id}
-                        value={bid}
-                        onChange={(e) => setBid(e.target.value)}
-                    />
-                <button type="submit" onClick={()=>handleBid(team)}>Place Bid</button>
-                </div>
-            ))}
-        </div>
-    );
-}
+    fetchTeams();
+  }, []);
+
+  if (loading) return <div>Loading teams...</div>;
+  if (error) return <div>Error: {error}</div>;
+
+  return (
+    <div className="teams-page">
+      <h1>Teams</h1>
+      <div className="teams-list">
+        {teams.map((team) => (
+          <div className="team-card" key={team.id}>
+            <h3>{team.owner}</h3>
+            <div>Units available: {team.units}</div>
+            <div>Players: {team.players.length}</div>
+            <div>Players by Slab:</div>
+            <ul>
+              {Object.entries(team.playerCount).map(([slab, count]) => (
+                <li key={slab}>{slab}: {count}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default TeamsPage;

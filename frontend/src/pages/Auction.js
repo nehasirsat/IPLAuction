@@ -3,6 +3,7 @@ import BidsTable from "../components/BidsTable";
 import CurrentBid from "../components/CurrentBid";
 import PlayerList from "../components/PlayerList";
 import TeamList from "../components/TeamList";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import "../styles/auction.css";
 
@@ -98,12 +99,27 @@ export default function Auction() {
   const [teams, setTeams] = useState([]);
   const [bidAmount, setBidAmount] = useState(0);
   const [currentTeamId, setCurrentTeamId] = useState(null);
+  const [timer, setTimer] = useState(0);
+  const [isBidding, setIsBidding] = useState(false);
+
+  const navigate=useNavigate();
   //const [currentBid,setCurrBid] =useState(0);
+
+  const [filteredTeams, setFilteredTeams] = useState([]);
+
+  useEffect(() => {
+    const totalPlayers = players.length; // Get the total players in auction
+    const maxPlayersPerTeam = Math.floor(totalPlayers / 3); // Calculate max players per team
+
+    // Filter teams based on the player count condition
+    const teamsWithAvailableSlots = teams.filter(team => team.players.length < maxPlayersPerTeam);
+    setFilteredTeams(teamsWithAvailableSlots);
+  }, [teams, players]);
 
   useEffect(() => {
       const fetchPlayers = async () => {
           try {
-              const response = await axios.get('http://localhost:5000/players');
+              const response = await axios.get('http://localhost:5000/select-players');
               setPlayers(response.data);
               setLoading(false);
           } catch (err) {
@@ -171,6 +187,9 @@ export default function Auction() {
             prevPlayers.map(p => p.id === updatedPlayer.id ? updatedPlayer : p)
         );
 
+        setTimer(10);
+        setIsBidding(true);
+
         //alert(`Bid placed successfully!`);
         //nextPlayer();  // Move to the next player after a successful bid
     } catch (err) {
@@ -225,12 +244,62 @@ export default function Auction() {
               prevPlayers.map(p => p.id === updatedPlayer.id ? updatedPlayer : p)
           );
 
+          setTimer(0);
+          setIsBidding(false);
+
           alert(`Bid placed successfully! ${updatedPlayer.name} is now with ${updatedTeam.owner}.`);
           nextPlayer();  // Move to the next player after a successful bid
       } catch (err) {
           alert('Failed to place bid. ' + err.response.data);
       }
   };
+
+  useEffect(() => {
+    let countdown;
+    if (isBidding && timer > 0) {
+      countdown = setInterval(() => {
+        setTimer((prevTimer) => {
+          if (prevTimer <= 1) {
+            FinalizeBid();
+            return 0;
+          }
+          return prevTimer - 1;
+        });
+      }, 1000);
+    }
+
+    return () => clearInterval(countdown);
+  }, [isBidding, timer]);
+
+  const submitAuction = () => {
+    const slabs = ['A', 'B', 'C', 'D', 'E'];
+
+    slabs.forEach(slab => {
+        const teamsWithPlayers = teams.filter(team => team.playerCount[slab] >= 2);
+        
+        if (teamsWithPlayers.length >= 2) {
+            // Find remaining players in this slab
+            const remainingPlayers = players.filter(player => player.slab === slab && player.status === 'available');
+
+            remainingPlayers.forEach(player => {
+                // Assign player to the third team if available
+                const thirdTeam = teams.find(team => !teamsWithPlayers.includes(team));
+                if (thirdTeam && thirdTeam.units >= player.basePrice) {
+                    thirdTeam.players.push(player);
+                    thirdTeam.units -= player.basePrice;
+                    player.status = 'sold'; // Update player status
+                    thirdTeam.playerCount[slab]++;
+                }
+            });
+        }
+
+      navigate('/auctionresult');
+        
+    });
+
+    // Further logic for the auction submission can go here
+};
+
 
   // Handle loading and error states
   if (loading) {
@@ -266,10 +335,11 @@ export default function Auction() {
           />
           <div>
           <button onClick={PlaceBid}>Place Bid</button>
+      {isBidding && <div>Time Remaining: {timer} seconds</div>}
           </div>
           <h2>Select Team to Bid:</h2>
           <div className="team-list">
-          {teams.map((team) => (
+          {filteredTeams.map((team) => (
               <div className="team-card" key={team.id}>
                   <h3>{team.owner}</h3>
                   <div>Units available </div>
@@ -285,6 +355,7 @@ export default function Auction() {
 
           <button onClick={FinalizeBid}>Finalize Bid</button>
           <button onClick={nextPlayer}>Next Player</button>
+          <button onClick={submitAuction}>Submit</button>
       </div>
   );
 

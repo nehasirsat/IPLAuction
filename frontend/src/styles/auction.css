@@ -54,17 +54,18 @@ button:hover {
 
 .team-list {
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap; /* Allows wrapping of cards */
+    justify-content: center; /* Centers the items */
     margin-top: 20px;
-    width: 900px;
 }
 
 .team-card {
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    margin: 0 10px;
-    width: 700px;
+    margin: 10px; /* Margin around each card */
+    width: 300px; /* Adjust width as needed */
     background-color: #f0f8ff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
 }
 
