@@ -1,12 +1,17 @@
 .teams-page {
     padding: 20px;
-    background-color: #f9f9f9;
+    /* background-color: #abeaf0; */
   }
   
   .teams-list {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+  
+  .team-info {
+    padding: 10px;
   }
   
   .team-card {
@@ -20,6 +25,8 @@
   }
   
   .team-card h3 {
+    font-size: x-large;
+    font-style: italic;
     margin: 0;
   }
   
@@ -29,6 +36,7 @@
   }
   
   .team-card li {
+    font-size: larger;
     margin: 5px 0;
   }
   
@@ -43,5 +51,18 @@
     .team-card {
       width: calc(100% - 20px); /* One card per row */
     }
+  }
+  
+  .avatar {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bolder;
+    width: 3rem;
+    height: 3rem;
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: #6ecff2;
   }
   

@@ -73,7 +73,8 @@ let auctionList = [];
 // API Endpoint to select players for auction
 app.post('/select-players', (req, res) => {
     const { selectedPlayerIds } = req.body;
-
+    
+    auctionList.length = 0;
     // Filter selected players from the players array
     const selectedPlayers = players.filter(player => selectedPlayerIds.includes(player.id));
 
@@ -168,6 +169,36 @@ app.post("/placebid", (req, res) => {
   return res.json({ team, player });
   //res.json(stringify(team,player));
 });
+
+app.post('/submit-auction', (req, res) => {
+    // Assuming you have a way to track the auction state and remaining players
+    const remainingPlayers = players.filter(player => player.status === "available");
+    const activeTeams = teams.filter(team => team.players.length < 8); // Adjust based on your max players logic
+
+    if (activeTeams.length === 1) {
+        const lastTeam = activeTeams[0];
+
+        // Automatically assign all remaining players to the last team at base price
+        remainingPlayers.forEach(player => {
+            if (lastTeam.units >= player.basePrice) {
+                lastTeam.players.push(player);
+                lastTeam.units -= player.basePrice;
+                player.status = "sold"; // Mark player as sold
+                player.winner = lastTeam.id; // Assign winner
+            }
+        });
+
+        return res.json({
+            message: 'All remaining players assigned to the last team.',
+            team: lastTeam,
+            players: lastTeam.players
+        });
+    }
+
+    // Your existing auction submission logic here...
+    return res.json({ message: 'Auction submitted successfully.' });
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

@@ -1,0 +1,29 @@
+/* Navbar Styles */
+.navbar {
+    background-color: #160b0bde; /* Dark background */
+    padding: 10px; /* Spacing around the navbar */
+    display: flex; /* Align items in a row */
+    justify-content: space-around; /* Space items evenly */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  }
+  
+  .navbar button {
+    background-color: #6fc3d6; /* Green background */
+    color: white; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Vertical and horizontal padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* No underline */
+    display: inline-block; /* Align inline */
+    font-size: 16px; /* Font size */
+    margin: 0 5px; /* Space between buttons */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer on hover */
+    transition: background-color 0.3s; /* Smooth background transition */
+  }
+  
+  .navbar button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+  

@@ -10,7 +10,7 @@ const HomePage = () => {
             <div className="options">
                 <Link to="/PlayerList" className="card">
                     {/* <img src="path/to/players-image.jpg" alt="Players" /> */}
-                    <h2>Configure Players</h2>
+                    <h2>Auction</h2>
                     <h4>Explore the complete roster of players available for the auction. Get insights into their stats, current status, and bid history.</h4>
                 </Link>
                 <Link to="/teams" className="card">
@@ -20,12 +20,12 @@ const HomePage = () => {
                 </Link>
                 <Link to="/playersPool" className="card">
                     {/* <img src="path/to/sold-players-image.jpg" alt="Sold Players" /> */}
-                    <h2>Players Pool</h2>
+                    <h2>Configure Pool</h2>
                     <h4>Discover the pool of players eligible for the auction. Review their details, including categories, base prices, and maximum bid limits.</h4>
                 </Link>
-                <Link to="/auction" className="card">
+                <Link to="/soldplayers" className="card">
                     {/* <img src="path/to/auction-image.jpg" alt="Auction" /> */}
-                    <h2>Start Bidding</h2>
+                    <h2>players</h2>
                     <h4>Kick off the auction! Begin placing bids on players and compete to build your ultimate team. May the best bid win!</h4>
                 </Link>
             </div>

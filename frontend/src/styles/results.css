@@ -1,48 +1,56 @@
 .res {
-    display: flex; /* Use flexbox for horizontal layout */
-    width: 100%; 
-    
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping if there's not enough space */
+    justify-content: center; /* Center-aligns the teams */
+    margin: 20px;
+    background-color: #a8d8f0;
+    height: 400px;
 }
 
-.auction-results {
-    padding: 20px;
-    display: flex; /* Make the container a flexbox */
-    justify-content: space-between; /* Distribute space between cards */
-    width: 100%; /* Full width of the container */
-  }
-  
-  .team-container {
-    display: flex; /* Use flexbox for horizontal layout */
-    width: 100%; /* Make it take full width of parent */
-  }
-  
-  .team-card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.team-card {
+    background-color: #93bbde; /* Light background color */
+    border: 1px solid #ccc; /* Border around the card */
+    border-radius: 8px; /* Rounded corners */
     padding: 15px;
-    margin: 10px; /* Space between cards */
-    background-color: #4389c6;
-    flex: 1; /* Each card will take equal space */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    min-width: 150px; /* Minimum width for each card */
-  }
-  
-  .team-card h3 {
-    margin: 0;
-  }
-  
-  .team-card h4 {
-    margin-top: 10px;
-  }
-  
-  .player-list {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  .player-list li {
-    margin: 5px 0;
-  }
+    margin: 10px;
+    width: 250px; /* Fixed width for uniformity */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    transition: transform 0.2s; /* Smooth hover effect */
+}
+
+.team-card:hover {
+    transform: scale(1.05); /* Slightly scale up on hover */
+}
+
+h3 {
+    font-size: 1.5em; /* Larger font for team owner */
+    color: #333; /* Dark color for better readability */
+}
+
+h4 {
+    font-size: 1.2em; /* Slightly smaller for subheading */
+    color: #555; /* Medium gray color */
+}
+
+.player-list {
+    list-style-type: none; /* Remove default bullet points */
+    padding: 0; /* Remove padding */
+    margin: 10px 0; /* Margin for spacing */
+}
+
+.player-list li {
+    background-color: #e6f7ff; /* Light blue background for players */
+    border-radius: 5px; /* Rounded corners */
+    padding: 8px;
+    margin: 5px 0; /* Space between players */
+    border: 1px solid #b3e0ff; /* Border to define player items */
+    transition: background-color 0.2s; /* Smooth background color change */
+}
+
+.player-list li:hover {
+    background-color: #a8d8f0; /* Change background color on hover */
+}
+
   
   
   

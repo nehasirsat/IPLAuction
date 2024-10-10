@@ -1,3 +1,47 @@
+.selected-players-container {
+    background-color: #f9f9f9; /* Light background for contrast */
+    padding: 20px; /* Spacing around the content */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 400px; /* Maximum width of the container */
+    margin: 20px auto; /* Centering the container */
+}
+
+.selected-players-title {
+    font-size: 1.5rem; /* Larger font for the title */
+    color: #333; /* Dark color for readability */
+    margin-bottom: 10px; /* Space below the title */
+    text-align: center; /* Centered title */
+}
+
+.selected-players-list {
+    list-style-type: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+}
+
+.selected-players-item {
+    padding: 10px; /* Padding around each list item */
+    border-bottom: 1px solid #ccc; /* Divider between items */
+    display: flex; /* Flexbox for alignment */
+    justify-content: space-between; /* Space between name and slab */
+    align-items: center; /* Center items vertically */
+}
+
+.selected-players-item:last-child {
+    border-bottom: none; /* Remove border from the last item */
+}
+
+.player-name {
+    font-weight: bold; /* Bold for player names */
+    color: #007BFF; /* Blue color for player names */
+}
+
+.player-slab {
+    color: #666; /* Grey color for slabs */
+    font-style: italic; /* Italic for a distinct look */
+}
+
+
 .player-list {
     display: flex;
     flex-wrap: wrap; /* Allow wrapping to the next line */

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/Player.css'
+import { useNavigate } from "react-router-dom";
 //import './PlayerCards.css'; // Import your CSS for styling
 
 const PlayersPool = () => {
     const [players, setPlayers] = useState([]);
     const [editingPlayerId, setEditingPlayerId] = useState(null);
     const [editingPlayerName, setEditingPlayerName] = useState('');
+
+    const navigate=useNavigate();
 
     // Fetch players from backend on component mount
     useEffect(() => {
@@ -43,6 +46,12 @@ const PlayersPool = () => {
 
     return (
         <div className="player-cards-container">
+             {/* <nav className="navbar">
+        {/* <button onClick={() => handleFilterChange('all')}>All Players</button> }
+        <button onClick={() => navigate('/FilteredPlayers')}>Sold Players</button>
+        <button onClick={() => handleFilterChange('unsold')}>Unsold Players</button>
+        <button onClick={() => handleFilterChange('slab')}>Slab Wise Players</button>
+      </nav> */}
             <h1>Players</h1>
             <div className="player-cards">
                 {players.map(player => (

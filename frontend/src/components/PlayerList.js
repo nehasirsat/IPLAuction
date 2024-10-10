@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/playerList.css'; // Import CSS for styling
 import axios from 'axios'
-import {ToastContainer,toast} from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 const PlayerList = () => {
@@ -9,12 +10,7 @@ const PlayerList = () => {
   let clicked=0;
   const navigate = useNavigate();
 
-  const notify = () => {
-    toast.success("Your message here!", {
-      position: "top-left", // Correctly specify the position as a string
-      autoClose: 5000,
-    });
-};
+  const notify = (m) => toast(m);
 
   const [selectedPlayerIds, setSelectedPlayerIds] = useState([]);
 
@@ -33,7 +29,7 @@ const PlayerList = () => {
 
     try {
       const response = await axios.post('http://localhost:5000/select-players', {
-          selectedPlayerIds,
+          selectedPlayerIds:playerIds
       });
       //alert(response.data.message);
       
@@ -64,14 +60,15 @@ const PlayerList = () => {
       if(selectedPlayerIds.length%3!=0)
       {
            alert('No of selected players must be multiple of three');
-          // notify();
+           //notify("No of selected players must be multiple of three");
            return;
       }
         try {
             const response = await axios.post('http://localhost:5000/select-players', {
                 selectedPlayerIds,
             });
-            alert(response.data.message);
+            notify(response.data.message);
+            //notify();
             
         } catch (error) {
             console.error('Error adding players to auction list:', error);
@@ -100,20 +97,24 @@ const PlayerList = () => {
       <h2>Select Players for Auction</h2>
       <label htmlFor="playerCount">Select Number of Players:</label>
       <select id="playerCount" value={selectedCount} onChange={handleSelection}>
+      <option value={0}>0</option>
         <option value={9}>9</option>
         <option value={12}>12</option>
         <option value={15}>15</option>
         <option value={21}>21</option>
         {/* Add more options as needed */}
       </select>
-
-      <h3>Selected Players:</h3>
-      <ul>
+      <div className="selected-players-container">
+    <h3 className="selected-players-title">Selected Players:</h3>
+    <ul className="selected-players-list">
         {selectedPlayers.map(player => (
-          <li key={player.id}>{player.name} - {player.slab}</li>
+            <li className="selected-players-item" key={player.id}>
+                <span className="player-name">{player.name}</span>
+                <span className="player-slab">{player.slab}</span>
+            </li>
         ))}
-      </ul>
-
+    </ul>
+</div>
       <button onClick={() => navigate("/auction")}>
         Start Auction
       </button>
