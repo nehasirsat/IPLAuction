@@ -1,27 +1,3 @@
-/* .auction-page {
-    display: flex; 
-    padding: 20px; 
-}
-
-.players-teams {
-    flex: 3; 
-    display: flex; 
-    margin-right: 20px; 
-}
-
-.player-list,
-.team-list {
-    flex: 1; 
-    margin-right: 10px; 
-}
-
-.bids-table {
-    flex: 1; 
-    background-color: #f9f9f9; 
-    padding: 10px; 
-    border: 1px solid #ddd; 
-    border-radius: 4px; 
-} */
 
 .player-bid-page {
     padding: 20px;
@@ -36,6 +12,7 @@
     display: inline-block;
     border-radius: 5px;
     background-color: #f0f8ff;
+    line-height: 1;
 }
 
 button {

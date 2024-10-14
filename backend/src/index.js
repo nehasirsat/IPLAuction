@@ -169,34 +169,55 @@ app.post("/placebid", (req, res) => {
   return res.json({ team, player });
   //res.json(stringify(team,player));
 });
+// Update teams and players with new auction rules
+app.post('/api/submit-auction', (req, res) => {
+    const { slabs } = req.body;
 
-app.post('/submit-auction', (req, res) => {
-    // Assuming you have a way to track the auction state and remaining players
-    const remainingPlayers = players.filter(player => player.status === "available");
-    const activeTeams = teams.filter(team => team.players.length < 8); // Adjust based on your max players logic
+    slabs.forEach((slab) => {
+        const teamsWithPlayers = teams.filter(
+            (team) => team.playerCount[slab] >= 2
+        );
 
-    if (activeTeams.length === 1) {
-        const lastTeam = activeTeams[0];
+        // If two teams have players from this slab, assign remaining players to the third team
+        if (teamsWithPlayers.length >= 2) {
+            const remainingPlayers = auctionList.filter(
+                (player) => player.slab === slab && player.status === "available"
+            );
 
-        // Automatically assign all remaining players to the last team at base price
-        remainingPlayers.forEach(player => {
-            if (lastTeam.units >= player.basePrice) {
-                lastTeam.players.push(player);
-                lastTeam.units -= player.basePrice;
-                player.status = "sold"; // Mark player as sold
-                player.winner = lastTeam.id; // Assign winner
-            }
+            const thirdTeam = teams.find(
+                (team) => !teamsWithPlayers.includes(team)
+            );
+
+            remainingPlayers.forEach((player) => {
+                if (thirdTeam && thirdTeam.units >= player.basePrice) {
+                    thirdTeam.players.push(player);
+                    thirdTeam.units -= player.basePrice;
+                    player.status = "sold";
+                    thirdTeam.playerCount[slab]++;
+                }
+            });
+        }
+
+        // Handle exhaustion of units
+        const exhaustedTeams = teams.filter(team => team.units <= 0);
+        exhaustedTeams.forEach((team) => {
+            const lastRemainingPlayers = players.filter(
+                (player) => player.slab === slab && player.status === "available"
+            );
+
+            lastRemainingPlayers.forEach((player) => {
+                if (team.units >= player.basePrice) {
+                    team.players.push(player);
+                    team.units -= player.basePrice;
+                    player.status = "sold";
+                    team.playerCount[slab]++;
+                }
+            });
         });
+    });
 
-        return res.json({
-            message: 'All remaining players assigned to the last team.',
-            team: lastTeam,
-            players: lastTeam.players
-        });
-    }
-
-    // Your existing auction submission logic here...
-    return res.json({ message: 'Auction submitted successfully.' });
+    // Optionally return the updated teams and players
+    res.json({ teams, players });
 });
 
 

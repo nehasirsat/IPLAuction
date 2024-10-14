@@ -4,7 +4,8 @@
     justify-content: center; /* Center-aligns the teams */
     margin: 20px;
     background-color: #a8d8f0;
-    height: 400px;
+    height: 100vh; /* Set height to full viewport height */
+    overflow-y: auto; 
 }
 
 .team-card {
@@ -18,9 +19,9 @@
     transition: transform 0.2s; /* Smooth hover effect */
 }
 
-.team-card:hover {
+/* .team-card:hover {
     transform: scale(1.05); /* Slightly scale up on hover */
-}
+/* } */ */
 
 h3 {
     font-size: 1.5em; /* Larger font for team owner */

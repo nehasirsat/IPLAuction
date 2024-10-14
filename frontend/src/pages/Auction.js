@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
-//import BidsTable from "../components/BidsTable";
-//import CurrentBid from "../components/CurrentBid";
 import PlayerList from "../components/PlayerList";
 import TeamList from "../components/TeamList";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/auction.css";
 
 export default function Auction() {
@@ -91,6 +89,11 @@ export default function Auction() {
       return;
     }
 
+    if (bidAmount <= currentPlayer.currentBid) {
+      alert("Your bid must be greater than the previous bid.");
+      return;
+    }
+
     if (team.units < bidAmount) {
       notify("Insufficient Units");
       return;
@@ -98,7 +101,7 @@ export default function Auction() {
 
     if (team.playerCount[currentPlayer.slab] > 1) {
       //alert("Maximum players in this slab reached.");
-      notify("Maximum players in this slab reached.")
+      notify("Maximum players in this slab reached.");
     }
     try {
       const response = await axios.post("http://localhost:5000/placebid", {
@@ -126,9 +129,8 @@ export default function Auction() {
   };
 
   const FinalizeBid = async () => {
-
     if (isFinalizing) return; // Prevent multiple calls
-    setIsFinalizing(true); 
+    setIsFinalizing(true);
     const currentPlayer = players[currentIndex];
     if (currentTeamId === null || bidAmount <= 0) {
       alert("Please select a team and enter a valid bid amount.");
@@ -145,6 +147,11 @@ export default function Auction() {
       alert("Bid amount is outside of limits.");
       return;
     }
+
+    // if ( bidAmount <= currentPlayer.currentBid) {
+    //   alert("Your bid must be greater than the previous bid.");
+    //   return;
+    // }
 
     if (team.units < bidAmount) {
       alert("Insufficient units.");
@@ -175,21 +182,21 @@ export default function Auction() {
       setPlayers((prevPlayers) =>
         prevPlayers.map((p) => (p.id === updatedPlayer.id ? updatedPlayer : p))
       );
-      
 
       // alert(
       //   `Bid placed successfully! ${updatedPlayer.name} is now with ${updatedTeam.owner}.`
       // );
-      notify(`Bid placed successfully! ${updatedPlayer.name} is now with ${updatedTeam.owner}.`)
+      notify(
+        `Bid placed successfully! ${updatedPlayer.name} is now with ${updatedTeam.owner}.`
+      );
       nextPlayer(); // Move to the next player after a successful bid
       setTimer(0);
       setIsBidding(false);
     } catch (err) {
       alert("Failed to place bid. " + err.response.data);
-    }
-    finally {
+    } finally {
       setIsFinalizing(false); // Reset the flag in finally block
-  }
+    }
   };
 
   useEffect(() => {
@@ -209,44 +216,32 @@ export default function Auction() {
     return () => {
       clearInterval(countdown);
       setIsFinalizing(false); // Ensure flag is reset if effect cleans up
-  };
+    };
   }, [isBidding, timer]);
 
-  const submitAuction = () => {
+  const submitAuction = async () => {
     const slabs = ["A", "B", "C", "D", "E"];
 
-    slabs.forEach((slab) => {
-      const teamsWithPlayers = teams.filter(
-        (team) => team.playerCount[slab] >= 2
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/submit-auction",
+        {
+          slabs,
+        }
       );
 
-      if (teamsWithPlayers.length >= 2) {
-        // Find remaining players in this slab
-        const remainingPlayers = players.filter(
-          (player) => player.slab === slab && player.status === "available"
-        );
+      // Handle the response
+      const { teams, players } = response.data;
 
-        remainingPlayers.forEach((player) => {
-          // Assign player to the third team if available
-          const thirdTeam = teams.find(
-            (team) => !teamsWithPlayers.includes(team)
-          );
-          if (thirdTeam && thirdTeam.units >= player.basePrice) {
-            thirdTeam.players.push(player);
-            thirdTeam.units -= player.basePrice;
-            player.status = "sold"; // Update player status
-            thirdTeam.playerCount[slab]++;
-          }
-        });
+      // Update your local state or UI with the updated teams and players
+      console.log("Updated Teams: ", teams);
+      console.log("Updated Players: ", players);
 
-      }
-
-      
-
-      navigate("/auctionresult");
-    });
-
-    // Further logic for the auction submission can go here
+    } catch (error) {
+      console.error("Error submitting auction: ", error);
+      // Handle error (e.g., show a notification to the user)
+    }
+    navigate("/auctionresult");
   };
 
   // Handle loading and error states

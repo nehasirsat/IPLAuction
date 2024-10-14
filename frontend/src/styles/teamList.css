@@ -1,6 +1,8 @@
 .teams-page {
     padding: 20px;
-    /* background-color: #abeaf0; */
+    background-color: #425a97; 
+    height: 100vh; /* Set height to full viewport height */
+    overflow-y: auto; 
   }
   
   .teams-list {

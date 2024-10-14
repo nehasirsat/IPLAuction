@@ -1,6 +1,6 @@
 .player-cards-container {
     padding: 20px;
-    background-color: rgb(220, 180, 219);
+    background-color: #75b0fc
 }
 
 .player-cards {
@@ -15,7 +15,7 @@
     padding: 15px;
     margin: 10px;
     width: 200px;
-    background-color: #7aa8c9;
+    background-color: #c6aad5;
     text-align: center;
     box-shadow: 0 2px 5px rgba(79, 32, 32, 0.1);
 }

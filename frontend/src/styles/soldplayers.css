@@ -1,6 +1,6 @@
 /* Navbar Styles */
 .navbar {
-    background-color: #160b0bde; /* Dark background */
+    background-color: #160d0bde; /* Dark background */
     padding: 10px; /* Spacing around the navbar */
     display: flex; /* Align items in a row */
     justify-content: space-around; /* Space items evenly */
@@ -21,6 +21,7 @@
     border-radius: 5px; /* Rounded corners */
     cursor: pointer; /* Pointer on hover */
     transition: background-color 0.3s; /* Smooth background transition */
+    
   }
   
   .navbar button:hover {
